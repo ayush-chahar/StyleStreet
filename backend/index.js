@@ -7,12 +7,18 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const { log } = require('console');
-
+const dotenv = require('dotenv');
+dotenv.config({
+    path:".env"
+})
+console.log(process.env.MONGO_URI)
 app.use(express.json());
 app.use(cors());
 
 // Database Connection With MongoDB
-mongoose.connect('mongodb+srv://ayushchahar:Ayush%40atlas@cluster0.anr7k9h.mongodb.net/ecommerce')
+mongoose.connect(`${process.env.MONGO_URI}`).then(()=>{
+    console.log("DB connected!!")
+})
 
 // Image Storage Engine
 const storage = multer.diskStorage({
